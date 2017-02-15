@@ -1,14 +1,14 @@
 {
-  "name": "Backend",
+  "name": "CRM",
   "version": "1.0.1",
-  "description": "Backend",
+  "description": "CRM",
   "main": "main.js",
   "scripts": {
     "start": "electron main.js"
   },
   "keywords": [
-    "backend"
+    "CRM"
   ],
-  "author": ["Sam", "Jason"],
+  "author": ["Sam", "Jason", "Joe", "Taylor"],
   "license": "MIT"
 }
