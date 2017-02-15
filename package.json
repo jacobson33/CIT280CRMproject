@@ -1,0 +1,14 @@
+{
+  "name": "Backend",
+  "version": "1.0.1",
+  "description": "Backend",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "keywords": [
+    "backend"
+  ],
+  "author": ["Sam", "Jason"],
+  "license": "MIT"
+}
