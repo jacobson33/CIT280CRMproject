@@ -8,6 +8,7 @@ namespace CIT280CRM.Models
 {
     public class ProductModels
     {
+        [Key]
         public int ProductID { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
