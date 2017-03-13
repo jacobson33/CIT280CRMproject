@@ -25,6 +25,7 @@ namespace CIT280CRM
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/lavish-bootstrap.css",
                       "~/Content/site.css"));
         }
     }
