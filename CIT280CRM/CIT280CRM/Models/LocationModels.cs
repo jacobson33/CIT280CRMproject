@@ -7,6 +7,7 @@ namespace CIT280CRM.Models
 {
     public class LocationModels
     {
+        [Key]
         public int LocationID { get; set; }
         public string Name { get; set; }
         public string StreetAddress { get; set; }

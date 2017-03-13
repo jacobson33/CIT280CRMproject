@@ -15,6 +15,7 @@ namespace CIT280CRM.Models
 
         public int InvoiceID { get; set; }
 
-        public int Amount { get; set; }
+        public int Quantity { get; set; }
+        public double Price { get; set; }
     }
 }
