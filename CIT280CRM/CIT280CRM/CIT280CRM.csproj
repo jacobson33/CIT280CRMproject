@@ -213,6 +213,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Building_Front.jpg" />
+    <Content Include="Assets\Building_Front_YellowTrucks.jpg" />
+    <Content Include="Assets\Truck_Yellow.jpg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
