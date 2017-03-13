@@ -6,7 +6,7 @@ using System.Web;
 
 namespace CIT280CRM.Models
 {
-    public class SaleModels
+    public class SaleItemModels
     {
 
     }
