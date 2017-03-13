@@ -14,6 +14,10 @@ namespace CIT280CRM.Models
 
         }
 
-        
+        public DbSet<ClientModels> Clients { get; set; }
+        public DbSet<InvoiceModels> Invoices { get; set; }
+        public DbSet<SaleItemModels> SaleItems { get; set; }
+        public DbSet<ProductModels> Products { get; set; }
+        public DbSet<LocationModels> Locations { get; set; }
     }
 }
