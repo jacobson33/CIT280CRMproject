@@ -8,6 +8,13 @@ namespace CIT280CRM.Models
 {
     public class SaleItemModels
     {
+        [Key]
+        public int SaleItemID { get; set; }
 
+        public int ProductID { get; set; }
+
+        public int InvoiceID { get; set; }
+
+        public int Amount { get; set; }
     }
 }
