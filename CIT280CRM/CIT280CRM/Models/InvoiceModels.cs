@@ -13,7 +13,7 @@ namespace CIT280CRM.Models
 
         public int ClientID { get; set; }
 
-        public int TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         public List<SaleItemModels> LineItems { get; set; }
         
     }
