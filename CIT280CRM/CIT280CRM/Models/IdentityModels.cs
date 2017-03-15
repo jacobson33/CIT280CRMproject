@@ -3,6 +3,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections;
+using System.Linq;
 
 namespace CIT280CRM.Models
 {
@@ -30,6 +32,8 @@ namespace CIT280CRM.Models
         public DbSet<LocationModels> Location { get; set; }
         public DbSet<ProductModels> Product { get; set; }
         public DbSet<SaleItemModels> SaleItem { get; set; }
+        public DbSet<ClientModels> Client { get; set; }
+
 
 
         public static ApplicationDbContext Create()

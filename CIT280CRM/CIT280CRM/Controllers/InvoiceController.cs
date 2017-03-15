@@ -38,6 +38,7 @@ namespace CIT280CRM.Controllers
         // GET: InvoiceModels/Create
         public ActionResult Create()
         {
+            ViewBag.Clients = db.Client.ToList().OrderBy(c => c.CompanyName);
             return View();
         }
 
