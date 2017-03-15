@@ -5,14 +5,14 @@ namespace CIT280CRM.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<CIT280CRM.Models.CRMDb>
+    internal sealed class Configuration : DbMigrationsConfiguration<CIT280CRM.Models.ApplicationDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(CIT280CRM.Models.CRMDb context)
+        protected override void Seed(CIT280CRM.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

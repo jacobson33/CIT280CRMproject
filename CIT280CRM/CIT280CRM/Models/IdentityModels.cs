@@ -25,6 +25,13 @@ namespace CIT280CRM.Models
         {
         }
 
+        //DbSets for all models insert here
+        public DbSet<InvoiceModels> Invoice { get; set; }
+        public DbSet<LocationModels> Location { get; set; }
+        public DbSet<ProductModels> Product { get; set; }
+        public DbSet<SaleItemModels> SaleItem { get; set; }
+
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
