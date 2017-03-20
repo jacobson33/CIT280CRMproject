@@ -36,8 +36,14 @@ namespace CIT280CRM.Migrations
                         InvoiceID = c.Int(nullable: false, identity: true),
                         ClientID = c.Int(nullable: false),
                         TotalAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        PurchaseOrder = c.String(),
+                        InvoiceDate = c.DateTime(nullable: false),
+                        ShipDate = c.DateTime(nullable: false),
+                        InvoiceStatus = c.String(),
                     })
-                .PrimaryKey(t => t.InvoiceID);
+                .PrimaryKey(t => t.InvoiceID)
+                .ForeignKey("dbo.Client", t => t.ClientID, cascadeDelete: true)
+                .Index(t => t.ClientID);
             
             CreateTable(
                 "dbo.SaleItems",
@@ -50,11 +56,35 @@ namespace CIT280CRM.Migrations
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                     })
                 .PrimaryKey(t => t.SaleItemID)
+                .ForeignKey("dbo.Products", t => t.ProductID, cascadeDelete: true)
                 .ForeignKey("dbo.Invoice", t => t.InvoiceID, cascadeDelete: true)
+                .Index(t => t.ProductID)
                 .Index(t => t.InvoiceID);
             
             CreateTable(
-                "dbo.LocationModels",
+                "dbo.Products",
+                c => new
+                    {
+                        ProductID = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        Price = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        CategoryID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ProductID)
+                .ForeignKey("dbo.Category", t => t.CategoryID, cascadeDelete: true)
+                .Index(t => t.CategoryID);
+            
+            CreateTable(
+                "dbo.Category",
+                c => new
+                    {
+                        CategoryID = c.Int(nullable: false, identity: true),
+                        Category = c.String(),
+                    })
+                .PrimaryKey(t => t.CategoryID);
+            
+            CreateTable(
+                "dbo.Location",
                 c => new
                     {
                         LocationID = c.Int(nullable: false, identity: true),
@@ -65,17 +95,6 @@ namespace CIT280CRM.Migrations
                         Zip = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.LocationID);
-            
-            CreateTable(
-                "dbo.Products",
-                c => new
-                    {
-                        ProductID = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        Price = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        Category = c.String(),
-                    })
-                .PrimaryKey(t => t.ProductID);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -154,20 +173,27 @@ namespace CIT280CRM.Migrations
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.SaleItems", "InvoiceID", "dbo.Invoice");
+            DropForeignKey("dbo.SaleItems", "ProductID", "dbo.Products");
+            DropForeignKey("dbo.Products", "CategoryID", "dbo.Category");
+            DropForeignKey("dbo.Invoice", "ClientID", "dbo.Client");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Products", new[] { "CategoryID" });
             DropIndex("dbo.SaleItems", new[] { "InvoiceID" });
+            DropIndex("dbo.SaleItems", new[] { "ProductID" });
+            DropIndex("dbo.Invoice", new[] { "ClientID" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Location");
+            DropTable("dbo.Category");
             DropTable("dbo.Products");
-            DropTable("dbo.LocationModels");
             DropTable("dbo.SaleItems");
             DropTable("dbo.Invoice");
             DropTable("dbo.Client");
