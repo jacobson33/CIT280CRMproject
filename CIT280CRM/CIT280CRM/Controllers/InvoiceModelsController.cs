@@ -10,7 +10,7 @@ using CIT280CRM.Models;
 
 namespace CIT280CRM.Controllers
 {
-    public class InvoiceController : Controller
+    public class InvoiceModelsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
@@ -38,7 +38,6 @@ namespace CIT280CRM.Controllers
         // GET: InvoiceModels/Create
         public ActionResult Create()
         {
-            ViewBag.Clients = db.Client.ToList().OrderBy(c => c.CompanyName);
             return View();
         }
 

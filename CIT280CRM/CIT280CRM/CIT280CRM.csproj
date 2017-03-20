@@ -194,7 +194,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClientModelsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\InvoiceModelsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SaleItemModelsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -296,11 +296,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
-    <Content Include="Views\Invoice\Create.cshtml" />
-    <Content Include="Views\Invoice\Delete.cshtml" />
-    <Content Include="Views\Invoice\Details.cshtml" />
-    <Content Include="Views\Invoice\Edit.cshtml" />
-    <Content Include="Views\Invoice\Index.cshtml" />
     <Content Include="Views\ClientModels\Create.cshtml" />
     <Content Include="Views\ClientModels\Delete.cshtml" />
     <Content Include="Views\ClientModels\Details.cshtml" />
@@ -311,6 +306,11 @@
     <Content Include="Views\SaleItemModels\Details.cshtml" />
     <Content Include="Views\SaleItemModels\Edit.cshtml" />
     <Content Include="Views\SaleItemModels\Index.cshtml" />
+    <Content Include="Views\InvoiceModels\Create.cshtml" />
+    <Content Include="Views\InvoiceModels\Delete.cshtml" />
+    <Content Include="Views\InvoiceModels\Details.cshtml" />
+    <Content Include="Views\InvoiceModels\Edit.cshtml" />
+    <Content Include="Views\InvoiceModels\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
