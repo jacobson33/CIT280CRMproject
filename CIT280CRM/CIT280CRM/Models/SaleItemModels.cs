@@ -14,6 +14,8 @@ namespace CIT280CRM.Models
         public int SaleItemID { get; set; }
 
         public int ProductID { get; set; }
+        [ForeignKey("ProductID")]
+        public ProductModels ProductModels { get; set; }
 
         public int InvoiceID { get; set; }
 
