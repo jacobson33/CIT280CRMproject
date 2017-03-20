@@ -9,7 +9,7 @@ namespace CIT280CRM.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(CIT280CRM.Models.ApplicationDbContext context)
@@ -26,49 +26,6 @@ namespace CIT280CRM.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-
-            context.Client.AddOrUpdate(c => c.ClientID,
-                new Models.ClientModels { CompanyName = "Company 1",
-                    Address1 = "",
-                    City = "",
-                    State = "",
-                    ZipCode = "12345",
-                    Phone1 = "",
-                    Phone1Type = 0,
-                    Phone2 = "",
-                    Phone2Type = 1,
-                    Active = true,
-                    DeleteInd = false
-                },
-                new Models.ClientModels
-                {
-                    CompanyName = "Company 2",
-                    Address1 = "",
-                    City = "",
-                    State = "",
-                    ZipCode = "12345",
-                    Phone1 = "",
-                    Phone1Type = 0,
-                    Phone2 = "",
-                    Phone2Type = 1,
-                    Active = true,
-                    DeleteInd = false
-                },
-                new Models.ClientModels
-                {
-                    CompanyName = "Company 3",
-                    Address1 = "",
-                    City = "",
-                    State = "",
-                    ZipCode = "12345",
-                    Phone1 = "",
-                    Phone1Type = 0,
-                    Phone2 = "",
-                    Phone2Type = 1,
-                    Active = true,
-                    DeleteInd = false
-                }
-            );
         }
     }
 }
