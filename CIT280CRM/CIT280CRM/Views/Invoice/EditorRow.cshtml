@@ -1,0 +1,25 @@
+﻿@model CIT280CRM.Models.SaleItemModels
+
+<div class="editorRow">
+    @using (Html.BeginCollectionItem("LineItems"))
+    {
+        <tr class="editorRow">
+            <td>
+                @Html.LabelFor(x => x.ProductID)
+                @Html.EditorFor(x => x.ProductID)
+            </td>
+            <td>
+                @Html.LabelFor(x => x.Quantity)
+                @Html.EditorFor(x => x.Quantity)
+            </td>
+            <td>
+                @Html.LabelFor(x => x.Price)
+                @Html.EditorFor(x => x.Price)
+            </td>
+            <td>
+                <a href="#" class="deleteRow">delete</a>
+            </td>
+        </tr>
+        
+    }
+</div>

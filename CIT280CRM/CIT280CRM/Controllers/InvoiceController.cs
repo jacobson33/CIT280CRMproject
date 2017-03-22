@@ -10,17 +10,23 @@ using CIT280CRM.Models;
 
 namespace CIT280CRM.Controllers
 {
-    public class InvoiceModelsController : Controller
+    public class InvoiceController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: InvoiceModels
-        public ActionResult Index()
+        public ActionResult BlankEditorRow()
         {
-            return View(db.Invoice.ToList());
+            return PartialView("EditorRow", new SaleItemModels());
         }
 
-        // GET: InvoiceModels/Details/5
+        // GET: Invoice
+        public ActionResult Index()
+        {
+            var invoice = db.Invoice.Include(i => i.ClientModels);
+            return View(invoice.ToList());
+        }
+
+        // GET: Invoice/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,18 +41,21 @@ namespace CIT280CRM.Controllers
             return View(invoiceModels);
         }
 
-        // GET: InvoiceModels/Create
+        // GET: Invoice/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.ClientID = new SelectList(db.Client, "ClientID", "CompanyName");
+
+            var model = new InvoiceModels();
+            return View(model);
         }
 
-        // POST: InvoiceModels/Create
+        // POST: Invoice/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "InvoiceID,ClientID,TotalAmount")] InvoiceModels invoiceModels)
+        public ActionResult Create([Bind(Include = "InvoiceID,ClientID,TotalAmount,PurchaseOrder,InvoiceDate,ShipDate,InvoiceStatus")] InvoiceModels invoiceModels)
         {
             if (ModelState.IsValid)
             {
@@ -55,10 +64,11 @@ namespace CIT280CRM.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.ClientID = new SelectList(db.Client, "ClientID", "CompanyName", invoiceModels.ClientID);
             return View(invoiceModels);
         }
 
-        // GET: InvoiceModels/Edit/5
+        // GET: Invoice/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -70,15 +80,16 @@ namespace CIT280CRM.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ClientID = new SelectList(db.Client, "ClientID", "CompanyName", invoiceModels.ClientID);
             return View(invoiceModels);
         }
 
-        // POST: InvoiceModels/Edit/5
+        // POST: Invoice/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "InvoiceID,ClientID,TotalAmount")] InvoiceModels invoiceModels)
+        public ActionResult Edit([Bind(Include = "InvoiceID,ClientID,TotalAmount,PurchaseOrder,InvoiceDate,ShipDate,InvoiceStatus")] InvoiceModels invoiceModels)
         {
             if (ModelState.IsValid)
             {
@@ -86,10 +97,11 @@ namespace CIT280CRM.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.ClientID = new SelectList(db.Client, "ClientID", "CompanyName", invoiceModels.ClientID);
             return View(invoiceModels);
         }
 
-        // GET: InvoiceModels/Delete/5
+        // GET: Invoice/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -104,7 +116,7 @@ namespace CIT280CRM.Controllers
             return View(invoiceModels);
         }
 
-        // POST: InvoiceModels/Delete/5
+        // POST: Invoice/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

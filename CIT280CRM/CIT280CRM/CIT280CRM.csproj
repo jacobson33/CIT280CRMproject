@@ -194,9 +194,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClientModelsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InvoiceModelsController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ProductModelsController.cs" />
     <Compile Include="Controllers\SaleItemModelsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -207,6 +206,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\HtmlPrefixScopeExtensions.cs" />
     <Compile Include="Models\CategoryModels.cs" />
     <Compile Include="Models\ClientModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -308,16 +308,12 @@
     <Content Include="Views\SaleItemModels\Details.cshtml" />
     <Content Include="Views\SaleItemModels\Edit.cshtml" />
     <Content Include="Views\SaleItemModels\Index.cshtml" />
-    <Content Include="Views\InvoiceModels\Create.cshtml" />
-    <Content Include="Views\InvoiceModels\Delete.cshtml" />
-    <Content Include="Views\InvoiceModels\Details.cshtml" />
-    <Content Include="Views\InvoiceModels\Edit.cshtml" />
-    <Content Include="Views\InvoiceModels\Index.cshtml" />
-    <Content Include="Views\ProductModels\Create.cshtml" />
-    <Content Include="Views\ProductModels\Delete.cshtml" />
-    <Content Include="Views\ProductModels\Details.cshtml" />
-    <Content Include="Views\ProductModels\Edit.cshtml" />
-    <Content Include="Views\ProductModels\Index.cshtml" />
+    <Content Include="Views\Invoice\Create.cshtml" />
+    <Content Include="Views\Invoice\Delete.cshtml" />
+    <Content Include="Views\Invoice\Details.cshtml" />
+    <Content Include="Views\Invoice\Edit.cshtml" />
+    <Content Include="Views\Invoice\Index.cshtml" />
+    <Content Include="Views\Invoice\EditorRow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

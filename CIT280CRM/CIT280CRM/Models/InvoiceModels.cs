@@ -29,6 +29,11 @@ namespace CIT280CRM.Models
         public string InvoiceStatus { get; set; }
 
         public List<SaleItemModels> LineItems { get; set; }
+
+        public InvoiceModels()
+        {
+            this.LineItems = new List<SaleItemModels>();
+        }
         
     }
 }
