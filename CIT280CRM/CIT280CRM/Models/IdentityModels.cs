@@ -30,7 +30,7 @@ namespace CIT280CRM.Models
         //DbSets for all models insert here
         public DbSet<InvoiceModels> Invoice { get; set; }
         public DbSet<LocationModels> Location { get; set; }
-        public DbSet<ProductModels> Product { get; set; }
+        public DbSet<ProductModels> Products { get; set; }
         public DbSet<SaleItemModels> SaleItem { get; set; }
         public DbSet<ClientModels> Client { get; set; }
 

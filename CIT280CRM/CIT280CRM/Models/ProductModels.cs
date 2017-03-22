@@ -15,7 +15,7 @@ namespace CIT280CRM.Models
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int CategoryID { get; set; }
-        [ForeignKey("CategoryID")]
-        public CategoryModels CategoryModels { get; set; }
+        //[ForeignKey("CategoryID")]
+        //public CategoryModels CategoryModels { get; set; }
     }
 }
