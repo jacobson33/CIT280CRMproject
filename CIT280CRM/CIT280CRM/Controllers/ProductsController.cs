@@ -10,7 +10,7 @@ using CIT280CRM.Models;
 
 namespace CIT280CRM.Controllers
 {
-    public class Products : Controller
+    public class ProductsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 

@@ -33,6 +33,7 @@ namespace CIT280CRM.Models
         public DbSet<ProductModels> Products { get; set; }
         public DbSet<SaleItemModels> SaleItem { get; set; }
         public DbSet<ClientModels> Client { get; set; }
+        public DbSet<CategoryModels> Category { get; set; }
 
 
 
