@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CIT280CRM.Models
+namespace CIT280CRM.Models.ViewModels
 {
-    [Table("Products")]
-    public class ProductModels
+    public class ProductViewModel
     {
-        [Key]
         public int ProductID { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
+        [Display(Name = "Category")]
         public int CategoryID { get; set; }
+        public string Category { get; set; }
     }
 }

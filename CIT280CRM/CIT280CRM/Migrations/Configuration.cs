@@ -4,6 +4,7 @@ namespace CIT280CRM.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using CIT280CRM.Models;
 
     internal sealed class Configuration : DbMigrationsConfiguration<CIT280CRM.Models.ApplicationDbContext>
     {
@@ -26,6 +27,14 @@ namespace CIT280CRM.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+            context.Category.AddOrUpdate(c => c.CategoryID,
+                new CategoryModels { Category = "Roofing" },
+                new CategoryModels { Category = "Siding" },
+                new CategoryModels { Category = "Decking" },
+                new CategoryModels { Category = "Windows and Doors" },
+                new CategoryModels { Category = "General Merchandise" },
+                new CategoryModels { Category = "Other Products" }
+            );
         }
     }
 }
