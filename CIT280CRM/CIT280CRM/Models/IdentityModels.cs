@@ -35,8 +35,6 @@ namespace CIT280CRM.Models
         public DbSet<ClientModels> Client { get; set; }
         public DbSet<CategoryModels> Category { get; set; }
 
-
-
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
