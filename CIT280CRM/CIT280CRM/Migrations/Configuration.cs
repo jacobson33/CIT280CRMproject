@@ -65,16 +65,16 @@ namespace CIT280CRM.Migrations
             // Not sure what "Name" entails when creating each Location Record
 
             context.Location.AddOrUpdate(l => l.LocationID,
-                new LocationModels { Name = "", StreetAddress = "5238 Normal Street", City = "Denver", State = "CO", Zip = 32468 },
-                new LocationModels { Name = "", StreetAddress = "7239 Normal Avenue", City = "Portland", State = "OR", Zip = 32690 },
-                new LocationModels { Name = "", StreetAddress = "4237 Normal Avenue", City = "Seattle", State = "WA", Zip = 45369 },
-                new LocationModels { Name = "", StreetAddress = "5234 Normal Drive", City = "Boston", State = "MA", Zip = 05623 },
-                new LocationModels { Name = "", StreetAddress = "5236 Normal Street", City = "Brooklyn", State = "NY", Zip = 12486 },
-                new LocationModels { Name = "", StreetAddress = "6235 Normal Avenue", City = "Chicago", State = "IL", Zip = 54678 },
-                new LocationModels { Name = "", StreetAddress = "3234 Normal Drive", City = "Detroit", State = "MI", Zip = 34892 },
-                new LocationModels { Name = "", StreetAddress = "8235 Normal Road", City = "Miami", State = "FL", Zip = 34512 },
-                new LocationModels { Name = "", StreetAddress = "9236 Normal Street", City = "Dallas", State = "TX", Zip = 65378 },
-                new LocationModels { Name = "", StreetAddress = "0237 Normal Road", City = "Oakland", State = "CA", Zip = 87230 }
+                new LocationModels { Name = "Denver", StreetAddress = "5238 Normal Street", City = "Denver", State = "CO", Zip = 32468 },
+                new LocationModels { Name = "Portland", StreetAddress = "7239 Normal Avenue", City = "Portland", State = "OR", Zip = 32690 },
+                new LocationModels { Name = "Seattle", StreetAddress = "4237 Normal Avenue", City = "Seattle", State = "WA", Zip = 45369 },
+                new LocationModels { Name = "Boston", StreetAddress = "5234 Normal Drive", City = "Boston", State = "MA", Zip = 05623 },
+                new LocationModels { Name = "Brooklyn", StreetAddress = "5236 Normal Street", City = "Brooklyn", State = "NY", Zip = 12486 },
+                new LocationModels { Name = "Chicago", StreetAddress = "6235 Normal Avenue", City = "Chicago", State = "IL", Zip = 54678 },
+                new LocationModels { Name = "Detroit", StreetAddress = "3234 Normal Drive", City = "Detroit", State = "MI", Zip = 34892 },
+                new LocationModels { Name = "Miami", StreetAddress = "8235 Normal Road", City = "Miami", State = "FL", Zip = 34512 },
+                new LocationModels { Name = "Dallas", StreetAddress = "9236 Normal Street", City = "Dallas", State = "TX", Zip = 65378 },
+                new LocationModels { Name = "Oakland", StreetAddress = "0237 Normal Road", City = "Oakland", State = "CA", Zip = 87230 }
                 );
         }
     }
