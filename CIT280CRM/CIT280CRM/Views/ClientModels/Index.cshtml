@@ -1,4 +1,5 @@
-﻿@model IEnumerable<CIT280CRM.Models.ClientModels>
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<CIT280CRM.Models.ClientModels>
 
 @{
     ViewBag.Title = "Clients";
@@ -9,25 +10,25 @@
 <p>
     @Html.ActionLink("Add New Client", "Create")
 </p>
-<table class="table">
+<table class="table" id="client_table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CompanyName)
+            CompanyName
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Address1)
+            Address1
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.City)
+            City
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.State)
+            State
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Phone1)
+            Phone1
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            Email
         </th>
         <th></th>
     </tr>
@@ -61,3 +62,7 @@
 }
 
 </table>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+    PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "client_table" }))
