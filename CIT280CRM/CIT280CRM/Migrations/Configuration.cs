@@ -65,16 +65,14 @@ namespace CIT280CRM.Migrations
             // Not sure what "Name" entails when creating each Location Record
 
             context.Location.AddOrUpdate(l => l.LocationID,
-                new LocationModels { Name = "Denver", StreetAddress = "5238 Normal Street", City = "Denver", State = "CO", Zip = 32468 },
-                new LocationModels { Name = "Portland", StreetAddress = "7239 Normal Avenue", City = "Portland", State = "OR", Zip = 32690 },
-                new LocationModels { Name = "Seattle", StreetAddress = "4237 Normal Avenue", City = "Seattle", State = "WA", Zip = 45369 },
-                new LocationModels { Name = "Boston", StreetAddress = "5234 Normal Drive", City = "Boston", State = "MA", Zip = 05623 },
-                new LocationModels { Name = "Brooklyn", StreetAddress = "5236 Normal Street", City = "Brooklyn", State = "NY", Zip = 12486 },
-                new LocationModels { Name = "Chicago", StreetAddress = "6235 Normal Avenue", City = "Chicago", State = "IL", Zip = 54678 },
-                new LocationModels { Name = "Detroit", StreetAddress = "3234 Normal Drive", City = "Detroit", State = "MI", Zip = 34892 },
-                new LocationModels { Name = "Miami", StreetAddress = "8235 Normal Road", City = "Miami", State = "FL", Zip = 34512 },
-                new LocationModels { Name = "Dallas", StreetAddress = "9236 Normal Street", City = "Dallas", State = "TX", Zip = 65378 },
-                new LocationModels { Name = "Oakland", StreetAddress = "0237 Normal Road", City = "Oakland", State = "CA", Zip = 87230 }
+                new LocationModels { Name = "Grand Rapids", StreetAddress = "1456 28th Street", City = "Wyoming", State = "MI", Zip = 49509 },
+                new LocationModels { Name = "Lansing", StreetAddress = "1615 East Miller Road", City = "Lansing", State = "MI", Zip = 48911 },
+                new LocationModels { Name = "Saginaw", StreetAddress = "3460 Bay Road", City = "Saginaw", State = "MI", Zip = 48603 },
+                new LocationModels { Name = "Sterling Heights", StreetAddress = "33663 Mound Road", City = "Sterling Heights", State = "MI", Zip = 48310 },
+                new LocationModels { Name = "Toledo", StreetAddress = "26440 Southpoint Road", City = "Perrysburg", State = "OH", Zip = 43551 },
+                new LocationModels { Name = "Traverse City", StreetAddress = "7201 East M-72", City = "Williamsburg", State = "MI", Zip = 49690 },
+                new LocationModels { Name = "Waterford", StreetAddress = "1131 Sylvertis", City = "Waterford", State = "MI", Zip = 48328 },
+                new LocationModels { Name = "Wayne", StreetAddress = "36340 Van Born Road", City = "Wayne", State = "MI", Zip = 48184 }
                 );
         }
     }
