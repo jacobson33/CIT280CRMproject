@@ -44,9 +44,9 @@ namespace CIT280CRM.Migrations
                 new ProductModels { Name = "Specialty Lumber", Price = 50, CategoryID = 5 },
                 new ProductModels { Name = "Railing", Price = 20, CategoryID = 5 },
                 new ProductModels { Name = "Insulation", Price = 5, CategoryID = 5 },
-                new ProductModels { Name = "Door", Price = 10, CategoryID = 4 },
+                new ProductModels { Name = "Door", Price = 40, CategoryID = 4 },
                 new ProductModels { Name = "Shingle", Price = 20, CategoryID = 1 },
-                new ProductModels { Name = "PVC", Price = 20, CategoryID = 1 },
+                new ProductModels { Name = "PVC", Price = 10, CategoryID = 1 },
                 new ProductModels { Name = "Siding", Price = 25, CategoryID = 2 }
                 );
 
