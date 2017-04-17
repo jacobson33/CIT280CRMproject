@@ -62,6 +62,8 @@ namespace CIT280CRM.Migrations
                 new ProductModels { Name = "Siding", Price = 25, CategoryID = 2 }
                 );
 
+            // Not sure what "Name" entails when creating each Location Record
+
             context.Location.AddOrUpdate(l => l.LocationID,
                 new LocationModels { Name = "", StreetAddress = "5238 Normal Street", City = "Denver", State = "CO", Zip = 32468 },
                 new LocationModels { Name = "", StreetAddress = "7239 Normal Avenue", City = "Portland", State = "OR", Zip = 32690 },
@@ -75,6 +77,8 @@ namespace CIT280CRM.Migrations
                 new LocationModels { Name = "", StreetAddress = "0237 Normal Road", City = "Oakland", State = "CA", Zip = 87230 }
                 );
 
+            // Not sure how the Foreign Key (ProductID) is implemented when creating each SaleItem Record
+
             context.SaleItem.AddOrUpdate(s => s.SaleItemID,
                 new SaleItemModels { InvoiceID = 1, Quantity = 8, Price = 10 },
                 new SaleItemModels { InvoiceID = 2, Quantity = 15, Price = 20 },
@@ -86,6 +90,21 @@ namespace CIT280CRM.Migrations
                 new SaleItemModels { InvoiceID = 8, Quantity = 23, Price = 70 },
                 new SaleItemModels { InvoiceID = 9, Quantity = 38, Price = 80 },
                 new SaleItemModels { InvoiceID = 10, Quantity = 10, Price = 25 }
+                );
+
+            // Not sure how the Foreign Key (ClientID) is implemented when creating each Invoice Record
+
+            context.Invoice.AddOrUpdate(i => i.InvoiceID,
+                new InvoiceModels { TotalAmount = 5200, PurchaseOrder = "", InvoiceDate = "4/12/2017", ShipDate = "4/20/2017", InvoiceStatus = "" },
+                new InvoiceModels { TotalAmount = 2300, PurchaseOrder = "", InvoiceDate = "3/15/2017", ShipDate = "4/01/2017", InvoiceStatus = "" },
+                new InvoiceModels { TotalAmount = 3400, PurchaseOrder = "", InvoiceDate = "4/24/2017", ShipDate = "5/06/2017", InvoiceStatus = "" },
+                new InvoiceModels { TotalAmount = 5000, PurchaseOrder = "", InvoiceDate = "2/22/2017", ShipDate = "3/14/2017", InvoiceStatus = "" },
+                new InvoiceModels { TotalAmount = 2000, PurchaseOrder = "", InvoiceDate = "2/13/2017", ShipDate = "3/20/2017", InvoiceStatus = "" },
+                new InvoiceModels { TotalAmount = 1000, PurchaseOrder = "", InvoiceDate = "2/01/2017", ShipDate = "2/25/2017", InvoiceStatus = "" },
+                new InvoiceModels { TotalAmount = 4800, PurchaseOrder = "", InvoiceDate = "6/23/2017", ShipDate = "7/01/2017", InvoiceStatus = "" },
+                new InvoiceModels { TotalAmount = 1500, PurchaseOrder = "", InvoiceDate = "6/03/2017", ShipDate = "6/22/2017", InvoiceStatus = "" },
+                new InvoiceModels { TotalAmount = 2500, PurchaseOrder = "", InvoiceDate = "8/21/2017", ShipDate = "8/28/2017", InvoiceStatus = "" },
+                new InvoiceModels { TotalAmount = 3500, PurchaseOrder = "", InvoiceDate = "7/14/2017", ShipDate = "7/23/2017", InvoiceStatus = "" }
                 );
         }
     }

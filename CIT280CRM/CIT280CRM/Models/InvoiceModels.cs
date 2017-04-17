@@ -22,9 +22,9 @@ namespace CIT280CRM.Models
 
         public string PurchaseOrder { get; set; }
 
-        public DateTime InvoiceDate { get; set; }
+        public string InvoiceDate { get; set; }
 
-        public DateTime ShipDate { get; set; }
+        public string ShipDate { get; set; }
 
         public string InvoiceStatus { get; set; }
 
