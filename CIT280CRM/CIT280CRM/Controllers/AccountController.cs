@@ -70,7 +70,7 @@ namespace CIT280CRM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserName, LastName, FirstName, Email")] CreateUserViewModel user)
+        public ActionResult Create([Bind(Include = "UserName, Email")] CreateUserViewModel user)
         {
             var db = new ApplicationDbContext();
 
@@ -111,7 +111,7 @@ namespace CIT280CRM.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserName, LastName, FirstName, Email")] EditUserViewModel userModel)
+        public ActionResult Edit([Bind(Include = "UserName, Email")] EditUserViewModel userModel)
         {
             if (ModelState.IsValid)
             {
