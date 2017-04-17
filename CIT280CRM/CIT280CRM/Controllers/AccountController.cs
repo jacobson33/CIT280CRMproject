@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CIT280CRM.Models;
+using System.Data.Entity;
+using System.Net;
+using System.Collections.Generic;
 
 namespace CIT280CRM.Controllers
 {
@@ -27,7 +30,127 @@ namespace CIT280CRM.Controllers
             UserManager = userManager;
             SignInManager = signInManager;
         }
+        public ActionResult Index()
+        {
+            var db = new ApplicationDbContext();
+            var users = db.Users;
+            var model = new List<EditUserViewModel>();
 
+            foreach (var user in users)
+            {
+                var u = new EditUserViewModel(user);
+                model.Add(u);
+            }
+
+            return View(model);
+        }
+
+        public ActionResult Details(string userName = null)
+        {
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == userName);
+            var model = new EditUserViewModel(user);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(model);
+        }
+
+        // GET: Users/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Users/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "UserName, LastName, FirstName, Email")] CreateUserViewModel user)
+        {
+            var db = new ApplicationDbContext();
+
+
+            if (ModelState.IsValid)
+            {
+                var newUser = new ApplicationUser();
+
+                newUser.UserName = user.UserName;
+                newUser.Email = user.Email;
+
+                db.Users.Add(newUser);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(user);
+        }
+
+        public ActionResult Edit(string userName = null)
+        {
+            if (userName == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == userName);
+            var model = new EditUserViewModel(user);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "UserName, LastName, FirstName, Email")] EditUserViewModel userModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var db = new ApplicationDbContext();
+                var user = db.Users.First(u => u.UserName == userModel.UserName);
+                user.Email = userModel.Email;
+
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(userModel);
+        }
+
+        public ActionResult Delete(string userName = null)
+        {
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == userName);
+            var model = new EditUserViewModel(user);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(model);
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(string userName)
+        {
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == userName);
+            db.Users.Remove(user);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         public ApplicationSignInManager SignInManager
         {
             get
