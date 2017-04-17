@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using CIT280CRM.Models;
 
 namespace CIT280CRM.Controllers
@@ -14,25 +15,19 @@ namespace CIT280CRM.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        [HttpPost]
         public ActionResult BlankEditorRow()
         {
             return PartialView("EditorRow", new SaleItemModels());
         }
 
         // GET: Invoice
-        [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var invoice = db.Invoice.Include(i => i.ClientModels);
-            return View(invoice.ToList());
-        }
+            invoice = invoice.OrderBy(i => i.InvoiceID);
 
-        [HttpPost]
-        public ActionResult Index(FormCollection collection)
-        {
-            //string search = collection
-            var invoice = db.Invoice.ToList();
-            return View(invoice);
+            return View(invoice.ToPagedList((page ?? 1), 15));
         }
 
         // GET: Invoice/Details/5
