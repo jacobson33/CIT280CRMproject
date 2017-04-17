@@ -47,7 +47,7 @@ namespace CIT280CRM.Models
         [RegularExpression("^([\\w\\.\\-]+)@([\\w\\-]+)((\\.(\\w){2,3})+)$", ErrorMessage = "Email Address is not Valid.")]
         public string Email { get; set; }
 
-        public DateTime EffDate { get; set; }
+        public string EffDate { get; set; }
 
         public bool Active { get; set; }
 

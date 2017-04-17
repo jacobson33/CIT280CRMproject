@@ -17,7 +17,9 @@ namespace CIT280CRM.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            return View(db.Products.ToList());
+            var products = db.Products.ToList();
+
+            return View(products);
         }
 
         // GET: Products/Details/5
@@ -32,12 +34,16 @@ namespace CIT280CRM.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Category = db.Category.Find(productModels.CategoryID);
+
             return View(productModels);
         }
 
         // GET: Products/Create
         public ActionResult Create()
         {
+            ViewBag.Categories = new SelectList(db.Category, "CategoryID", "Category");
             return View();
         }
 
@@ -70,6 +76,9 @@ namespace CIT280CRM.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Categories = new SelectList(db.Category, "CategoryID", "Category");
+
             return View(productModels);
         }
 
@@ -101,6 +110,9 @@ namespace CIT280CRM.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Category = db.Category.Find(productModels.CategoryID);
+
             return View(productModels);
         }
 

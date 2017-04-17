@@ -13,19 +13,25 @@ namespace CIT280CRM.Models
         [Key]
         public int InvoiceID { get; set; }
 
+        [Display(Name = "Client")]
         public int ClientID { get; set; }
 
         [ForeignKey("ClientID")]
         public ClientModels ClientModels { get; set; }
 
+        [Display(Name = "Total")]
         public decimal TotalAmount { get; set; }
 
+        [Display(Name = "P/O #")]
         public string PurchaseOrder { get; set; }
 
-        public DateTime InvoiceDate { get; set; }
+        [Display(Name = "Date")]
+        public string InvoiceDate { get; set; }
 
-        public DateTime ShipDate { get; set; }
+        [Display(Name = "Ship Date")]
+        public string ShipDate { get; set; }
 
+        [Display(Name = "Status")]
         public string InvoiceStatus { get; set; }
 
         public List<SaleItemModels> LineItems { get; set; }
