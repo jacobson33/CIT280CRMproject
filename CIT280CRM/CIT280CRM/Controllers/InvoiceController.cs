@@ -20,10 +20,19 @@ namespace CIT280CRM.Controllers
         }
 
         // GET: Invoice
+        [HttpGet]
         public ActionResult Index()
         {
             var invoice = db.Invoice.Include(i => i.ClientModels);
             return View(invoice.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult Index(FormCollection collection)
+        {
+            //string search = collection
+            var invoice = db.Invoice.ToList();
+            return View(invoice);
         }
 
         // GET: Invoice/Details/5

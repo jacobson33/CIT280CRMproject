@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Create New Invoice</h2>
 
 <div class="clearfix"></div>
 
@@ -13,12 +13,12 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal col-md-7">
-        <h4>InvoiceModels</h4>
+        <h4>Invoice Information</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.ClientID, "ClientID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-7">
                 @Html.DropDownList("ClientID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ClientID, "", new { @class = "text-danger" })
             </div>
@@ -26,7 +26,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.PurchaseOrder, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-7">
                 @Html.EditorFor(model => model.PurchaseOrder, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PurchaseOrder, "", new { @class = "text-danger" })
             </div>
@@ -34,7 +34,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.InvoiceDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-7">
                 @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger" })
             </div>
@@ -42,7 +42,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.ShipDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-7">
                 @Html.EditorFor(model => model.ShipDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ShipDate, "", new { @class = "text-danger" })
             </div>
@@ -59,7 +59,7 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-offset-2 col-md-7">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
@@ -68,19 +68,19 @@
 }
 
 <div class="col-md-5">
-    <h4>Total</h4>
+    <h4>Status &amp; Total</h4>
     <hr />
     <div class="form-group">
         @Html.LabelFor(model => model.InvoiceStatus, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.InvoiceStatus, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="col-md-5">
+            @Html.DropDownListFor(model => model.InvoiceStatus, new SelectList(new List<string>{"Created","Processing","Shipped","Delivered"}))
             @Html.ValidationMessageFor(model => model.InvoiceStatus, "", new { @class = "text-danger" })
         </div>
     </div>
-
+    <br /><br />
     <div class="form-group">
         @Html.LabelFor(model => model.TotalAmount, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-5">
             @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
         </div>
@@ -101,6 +101,7 @@
     $('#addItem').click(function () {
         $.ajax({
             url: this.href,
+            type:'POST',
             cache: false,
             success: function (html) {
                 $('#editorRows').append(html);
