@@ -11,6 +11,7 @@ using CIT280CRM.Models;
 
 namespace CIT280CRM.Controllers
 {
+    [AuthorizeOrRedirectAttribute(Roles = "Admin, Staff")]
     public class InvoiceController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

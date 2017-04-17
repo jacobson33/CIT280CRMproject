@@ -30,7 +30,8 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { userName=item.UserName }) |
             @Html.ActionLink("Details", "Details", new { userName = item.UserName }) |
-            @Html.ActionLink("Delete", "Delete", new { userName = item.UserName })
+            @Html.ActionLink("Delete", "Delete", new { userName = item.UserName }) |
+            @Html.ActionLink("Roles", "ViewUsersRoles", new { userName = item.UserName })
         </td>
     </tr>
 }

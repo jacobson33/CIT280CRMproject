@@ -192,8 +192,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="CustomAttribute\AuthorizeOrRedirectAttribute.cs" />
     <Compile Include="Controllers\ClientModelsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IdentityRoleController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -337,6 +340,14 @@
     <Content Include="Views\Account\Create.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\IdentityRole\Index.cshtml" />
+    <Content Include="Views\IdentityRole\Details.cshtml" />
+    <Content Include="Views\IdentityRole\Create.cshtml" />
+    <Content Include="Views\IdentityRole\Edit.cshtml" />
+    <Content Include="Views\IdentityRole\Delete.cshtml" />
+    <Content Include="Views\Account\ViewUsersRoles.cshtml" />
+    <Content Include="Views\Account\AddRoleToUser.cshtml" />
+    <Content Include="Views\Error\AccessDenied.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
