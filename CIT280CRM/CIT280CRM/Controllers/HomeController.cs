@@ -12,5 +12,9 @@ namespace CIT280CRM.Controllers
         {
             return View();
         }
+        public ActionResult Admin()
+        {
+            return View();
+        }
     }
 }

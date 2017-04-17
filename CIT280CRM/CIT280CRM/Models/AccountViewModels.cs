@@ -109,4 +109,48 @@ namespace CIT280CRM.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+    public class EditUserViewModel
+    {
+        public EditUserViewModel() { }
+
+        // Allow Initialization with an instance of ApplicationUser:
+        public EditUserViewModel(ApplicationUser user)
+        {
+            this.UserName = user.UserName;
+            this.Email = user.Email;
+        }
+
+        [Key]
+        [Required]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
+
+        [Required]
+        public string Email { get; set; }
+
+    }
+
+    public class CreateUserViewModel
+    {
+        public CreateUserViewModel() { }
+
+        // Allow Initialization with an instance of ApplicationUser:
+        public CreateUserViewModel(ApplicationUser user)
+        {
+            this.UserName = user.UserName;
+            this.Email = user.Email;
+        }
+
+        [Key]
+        [Required]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
+
+        [Required]
+        public string Email { get; set; }
+
+    }
+}
 }
