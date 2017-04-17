@@ -13,6 +13,7 @@ namespace CIT280CRM.Models
         [Key]
         [Display(Name = "Category")]
         public int CategoryID { get; set; }
+        [Display(Name = "Name")]
         public string Category { get; set; }
     }
 }

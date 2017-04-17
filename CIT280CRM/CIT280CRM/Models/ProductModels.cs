@@ -14,6 +14,7 @@ namespace CIT280CRM.Models
         public int ProductID { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
+        [Display(Name = "Category")]
         public int CategoryID { get; set; }
     }
 }
