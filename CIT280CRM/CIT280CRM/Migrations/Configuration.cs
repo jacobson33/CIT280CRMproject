@@ -50,19 +50,17 @@ namespace CIT280CRM.Migrations
                 );
 
             context.Products.AddOrUpdate(p => p.ProductID,
-                new ProductModels { Name = "Wood", Price = 20, CategoryID = 3 },
+                new ProductModels { Name = "Engineered Wood", Price = 20, CategoryID = 3 },
                 new ProductModels { Name = "Window", Price = 30, CategoryID = 4 },
-                new ProductModels { Name = "Drill", Price = 40, CategoryID = 5 },
-                new ProductModels { Name = "Nail", Price = 5, CategoryID = 5 },
-                new ProductModels { Name = "Ladder", Price = 20, CategoryID = 5 },
-                new ProductModels { Name = "Screw", Price = 5, CategoryID = 5 },
-                new ProductModels { Name = "Hammer", Price = 10, CategoryID = 5 },
+                new ProductModels { Name = "Lumber", Price = 40, CategoryID = 5 },
+                new ProductModels { Name = "Specialty Lumber", Price = 50, CategoryID = 5 },
+                new ProductModels { Name = "Railing", Price = 20, CategoryID = 5 },
+                new ProductModels { Name = "Insulation", Price = 5, CategoryID = 5 },
+                new ProductModels { Name = "Door", Price = 10, CategoryID = 4 },
                 new ProductModels { Name = "Shingle", Price = 20, CategoryID = 1 },
-                new ProductModels { Name = "Vent", Price = 20, CategoryID = 1 },
+                new ProductModels { Name = "PVC", Price = 20, CategoryID = 1 },
                 new ProductModels { Name = "Siding", Price = 25, CategoryID = 2 }
                 );
-
-            // Not sure what "Name" entails when creating each Location Record
 
             context.Location.AddOrUpdate(l => l.LocationID,
                 new LocationModels { Name = "Grand Rapids", StreetAddress = "1456 28th Street", City = "Wyoming", State = "MI", Zip = 49509 },
