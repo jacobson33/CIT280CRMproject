@@ -17,11 +17,9 @@ namespace CIT280CRM.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            var results = (from p in db.Products
-                           join c in db.Category on p.CategoryID equals c.CategoryID
-                           select new { p.ProductID, p.Name, p.Price, p.CategoryID, c.Category });
+            var products = db.Products.ToList();
 
-            return View(results.ToList());
+            return View(products);
         }
 
         // GET: Products/Details/5
