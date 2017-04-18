@@ -18,11 +18,11 @@
 </p>
 <table class="table" id="invoice_table">
     <tr>
-        <th>CompanyName</th>
-        <th>TotalAmount</th>
-        <th>PurchaseOrder</th>
-        <th>InvoiceDate</th>
-        <th>ShipDate</th>
+        <th>@Html.ActionLink("CompanyName", "Index", new { sortId = 1 })</th>
+        <th>@Html.ActionLink("TotalAmount", "Index", new { sortId = 2 })</th>
+        <th>@Html.ActionLink("PurchaseOrder", "Index", new { sortId = 3 })</th>
+        <th>@Html.ActionLink("InvoiceDate", "Index", new { sortId = 4 })</th>
+        <th>@Html.ActionLink("ShipDate", "Index", new { sortId = 5 })</th>
         <th>InvoiceStatus</th>
         <th></th>
     </tr>

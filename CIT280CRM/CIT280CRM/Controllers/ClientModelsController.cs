@@ -11,17 +11,29 @@ using CIT280CRM.Models;
 
 namespace CIT280CRM.Controllers
 {
-    [AuthorizeOrRedirectAttribute(Roles = "Admin, Staff")]
+    //[Authorize(Roles="Admin,Staff")]
     public class ClientModelsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: ClientModels
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? sortId, int? page)
         {
             var model = from m in db.Client
-                        orderby m.ClientID
                         select m;
+
+            switch (sortId)
+            {
+                case 1:
+                    model = model.OrderBy(i => i.CompanyName);
+                    break;
+                case 2:
+                    model = model.OrderBy(i => i.State);
+                    break;
+                default:
+                    model = model.OrderBy(i => i.ClientID);
+                    break;
+            }
 
             return View(model.ToPagedList((page ?? 1), 15));
         }

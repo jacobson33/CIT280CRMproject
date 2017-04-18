@@ -11,7 +11,7 @@ using CIT280CRM.Models;
 
 namespace CIT280CRM.Controllers
 {
-    [AuthorizeOrRedirectAttribute(Roles = "Admin, Staff")]
+    //[Authorize(Roles="Admin,Staff")]
     public class InvoiceController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -23,10 +23,31 @@ namespace CIT280CRM.Controllers
         }
 
         // GET: Invoice
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? sortId, int? page)
         {
             var invoice = db.Invoice.Include(i => i.ClientModels);
-            invoice = invoice.OrderBy(i => i.InvoiceID);
+
+            switch(sortId)
+            {
+                case 1:
+                    invoice = invoice.OrderBy(i => i.ClientModels.CompanyName);
+                    break;
+                case 2:
+                    invoice = invoice.OrderBy(i => i.TotalAmount);
+                    break;
+                case 3:
+                    invoice = invoice.OrderBy(i => i.PurchaseOrder);
+                    break;
+                case 4:
+                    invoice = invoice.OrderBy(i => i.InvoiceDate);
+                    break;
+                case 5:
+                    invoice = invoice.OrderBy(i => i.ShipDate);
+                    break;
+                default:
+                    invoice = invoice.OrderBy(i => i.InvoiceID);
+                    break;
+            }
 
             return View(invoice.ToPagedList((page ?? 1), 15));
         }
