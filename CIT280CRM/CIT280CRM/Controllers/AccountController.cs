@@ -9,6 +9,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CIT280CRM.Models;
+using System.Data.Entity;
+using System.Net;
+using System.Collections.Generic;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Web.Security;
 
 namespace CIT280CRM.Controllers
 {
@@ -26,6 +31,280 @@ namespace CIT280CRM.Controllers
         {
             UserManager = userManager;
             SignInManager = signInManager;
+        }
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult Index()
+        {
+            var db = new ApplicationDbContext();
+            var users = db.Users;
+            var model = new List<EditUserViewModel>();
+
+            foreach (var user in users)
+            {
+                var u = new EditUserViewModel(user);
+                model.Add(u);
+            }
+
+            return View(model);
+        }
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult Details(string userName = null)
+        {
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == userName);
+            var model = new EditUserViewModel(user);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(model);
+        }
+
+        // GET: Users/Create
+        // GET: Users/Create
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        //
+        // POST: Users/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public async Task<ActionResult> Create(CreateUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email
+                };
+
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    UserManager.AddToRole(user.Id, "User");
+
+                    return RedirectToAction("Index", "Account");
+                }
+                AddErrors(result);
+            }
+
+            return View(model);
+        }
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult Edit(string userName = null)
+        {
+            if (userName == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == userName);
+            var model = new EditUserViewModel(user);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult Edit([Bind(Include = "UserName, Email, Password, ConfirmPassword")] EditUserViewModel userModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var db = new ApplicationDbContext();
+                var user = db.Users.First(u => u.UserName == userModel.UserName);
+                user.Email = userModel.Email;
+
+                PasswordHasher ph = new PasswordHasher();
+                user.PasswordHash = ph.HashPassword(userModel.Password);
+
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(userModel);
+        }
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult Delete(string userName = null)
+        {
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == userName);
+            var model = new EditUserViewModel(user);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(model);
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost, ActionName("Delete")]
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult DeleteConfirmed(string userName)
+        {
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == userName);
+            db.Users.Remove(user);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult ViewUsersRoles(string userName = null)
+        {
+            if (!string.IsNullOrWhiteSpace(userName))
+            {
+                List<string> userRoles;
+
+                using (var context = new ApplicationDbContext())
+                {
+                    var roleStore = new RoleStore<IdentityRole>(context);
+                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                    var userStore = new UserStore<ApplicationUser>(context);
+                    var userManager = new UserManager<ApplicationUser>(userStore);
+
+                    var user = userManager.FindByName(userName);
+                    if (user == null)
+                        throw new Exception("User not found!");
+
+                    var userRoleIds = (from r in user.Roles select r.RoleId);
+                    userRoles = (from id in userRoleIds
+                                 let r = roleManager.FindById(id)
+                                 select r.Name).ToList();
+                }
+
+                ViewBag.UserName = userName;
+                ViewBag.RolesForUser = userRoles;
+            }
+            return View();
+        }
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult DeleteRoleForUser(string userName = null, string roleName = null)
+        {
+            if ((!string.IsNullOrWhiteSpace(userName)) || (!string.IsNullOrWhiteSpace(roleName)))
+            {
+                List<string> userRoles;
+
+                using (var context = new ApplicationDbContext())
+                {
+                    var roleStore = new RoleStore<IdentityRole>(context);
+                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                    var userStore = new UserStore<ApplicationUser>(context);
+                    var userManager = new UserManager<ApplicationUser>(userStore);
+
+                    var user = userManager.FindByName(userName);
+                    if (user == null)
+                        throw new Exception("User not found!");
+
+                    if (userManager.IsInRole(user.Id, roleName))
+                    {
+                        userManager.RemoveFromRole(user.Id, roleName);
+                        context.SaveChanges();
+                    }
+
+                    var userRoleIds = (from r in user.Roles select r.RoleId);
+                    userRoles = (from id in userRoleIds
+                                 let r = roleManager.FindById(id)
+                                 select r.Name).ToList();
+                }
+
+                ViewBag.RolesForUser = userRoles;
+                ViewBag.UserName = userName;
+
+                return View("ViewUsersRoles");
+            }
+            else
+            {
+                return View("Index");
+            }
+
+        }
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult AddRoleToUser(string userName = null)
+        {
+            List<string> roles;
+
+            using (var context = new ApplicationDbContext())
+            {
+                var roleStore = new RoleStore<IdentityRole>(context);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                roles = (from r in roleManager.Roles select r.Name).ToList();
+            }
+
+            ViewBag.Roles = new SelectList(roles);
+            ViewBag.UserName = userName;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult AddRoleToUser(string roleName, string userName)
+        {
+            List<string> roles;
+
+            using (var context = new ApplicationDbContext())
+            {
+                var roleStore = new RoleStore<IdentityRole>(context);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                var userStore = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+
+                var user = userManager.FindByName(userName);
+                if (user == null)
+                    throw new Exception("User not found!");
+
+                var role = roleManager.FindByName(roleName);
+                if (role == null)
+                    throw new Exception("Role not found!");
+
+                if (userManager.IsInRole(user.Id, role.Name))
+                {
+                    ViewBag.ErrorMessage = "This user already has the role specified !";
+
+                    roles = (from r in roleManager.Roles select r.Name).ToList();
+                    ViewBag.Roles = new SelectList(roles);
+
+                    ViewBag.UserName = userName;
+
+                    return View();
+                }
+                else
+                {
+                    userManager.AddToRole(user.Id, role.Name);
+                    context.SaveChanges();
+
+                    List<string> userRoles;
+                    var userRoleIds = (from r in user.Roles select r.RoleId);
+                    userRoles = (from id in userRoleIds
+                                 let r = roleManager.FindById(id)
+                                 select r.Name).ToList();
+
+                    ViewBag.UserName = userName;
+                    ViewBag.RolesForUser = userRoles;
+
+                    return View("ViewUsersRoles");
+                }
+            }
         }
 
         public ApplicationSignInManager SignInManager

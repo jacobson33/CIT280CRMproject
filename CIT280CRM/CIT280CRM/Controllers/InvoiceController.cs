@@ -6,24 +6,29 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using CIT280CRM.Models;
 
 namespace CIT280CRM.Controllers
 {
+    [AuthorizeOrRedirectAttribute(Roles = "Admin, Staff")]
     public class InvoiceController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        [HttpPost]
         public ActionResult BlankEditorRow()
         {
             return PartialView("EditorRow", new SaleItemModels());
         }
 
         // GET: Invoice
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var invoice = db.Invoice.Include(i => i.ClientModels);
-            return View(invoice.ToList());
+            invoice = invoice.OrderBy(i => i.InvoiceID);
+
+            return View(invoice.ToPagedList((page ?? 1), 15));
         }
 
         // GET: Invoice based on SearchTerm (PO #)

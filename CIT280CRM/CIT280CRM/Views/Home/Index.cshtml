@@ -9,19 +9,22 @@
             Wimsatt Building Materials is a company that sells steep slope & low slope roofing, exterior cladding, windows & doors, and general building materials.
             Serving builders and contractors across Michigan and Northern Ohio, their focus is on high qaulity standards. Wimsatt Headquarters is located in Wayne, Michigan.
         </p>
-        <p>
-            <a class="btn btn-default" href="~/ClientModels/Create">New Client &raquo;</a>
-            <a class="btn btn-default" href="~/Invoice/Create">New Invoice &raquo;</a>
-        </p>
+        @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+        {
+            <p>
+                <a class="btn btn-default" href="~/ClientModels/Create">New Client &raquo;</a>
+                <a class="btn btn-default" href="~/Invoice/Create">New Invoice &raquo;</a>
+            </p>
+        }
     </div>
-    
+
 </div>
 
 <div class="row">
     <div class="col-md-4">
         <h2>Products</h2>
         <p>
-            Check out all of the products we have to offer and find exactly what you need based on detailed categories and specifications. 
+            Check out all of the products we have to offer and find exactly what you need based on detailed categories and specifications.
         </p>
         <p><a class="btn btn-default" href="http://wimsattdirect.com/products.php">Learn more &raquo;</a></p>
     </div>

@@ -6,15 +6,20 @@ using System.Web.Mvc;
 
 namespace CIT280CRM.Controllers
 {
-    public class HomeController : Controller
+    public class ErrorController : Controller
     {
+        // GET: Error
+
+        // GET: Error
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("AccessDenied");
         }
-        public ActionResult Admin()
+
+        public ActionResult AccessDenied()
         {
             return View();
         }
+
     }
 }

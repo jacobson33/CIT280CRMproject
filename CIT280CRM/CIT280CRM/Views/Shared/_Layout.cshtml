@@ -21,14 +21,25 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Invoices", "Index", "Invoice")</li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Clients", "Index", "ClientModels")</li>
-                            <li>@Html.ActionLink("Products", "Index", "Products")</li>
-                        </ul>
-                    </li>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Manage Invoices", "Index", "Invoice")</li>
+                                <li>@Html.ActionLink("Manage Clients", "Index", "ClientModels")</li>
+                                <li>@Html.ActionLink("Manage Products", "Index", "Products")</li>
+                                <li>@Html.ActionLink("Manage Sale Items", "Index", "SaleItemModels")</li>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li role="separator" class="divider"></li>
+                                    <li>@Html.ActionLink("Manage Users", "Index", "Account")</li>
+                                    <li>@Html.ActionLink("Manage Roles", "Index", "IdentityRole")</li>
+                                }
+                            </ul>
+
+                        </li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
