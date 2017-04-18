@@ -26,6 +26,17 @@ namespace CIT280CRM.Controllers
             return View(invoice.ToList());
         }
 
+        // GET: Invoice based on SearchTerm (PO #)
+        [HttpGet]
+        public ActionResult IndexSearch(string searchTerm)
+        {
+            var invoice = (from i in db.Invoice
+                           where i.PurchaseOrder == searchTerm
+                           select i).ToList();
+
+            return View(invoice);
+        }
+
         // GET: Invoice/Details/5
         public ActionResult Details(int? id)
         {
