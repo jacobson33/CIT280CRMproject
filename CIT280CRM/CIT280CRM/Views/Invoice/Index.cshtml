@@ -2,10 +2,10 @@
 @model PagedList.IPagedList<CIT280CRM.Models.InvoiceModels>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Invoices";
 }
 
-<h2>Index</h2>
+<h2>Invoices</h2>
 
 <form method="get" action="@Url.Action("IndexSearch", "InvoiceController")">
     <label for="search">Search by PO</label>
