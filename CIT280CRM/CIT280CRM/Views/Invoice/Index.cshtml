@@ -7,11 +7,15 @@
 
 <h2>Index</h2>
 
-<form method="get" action="@Url.Action("IndexSearch", "InvoiceController")">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
     <label for="search">Search by PO</label>
-    <input type="text" name="search" id="search" />
-    <button type="submit">Submit</button>
-</form>
+    @Html.TextBox("searchTerm")
+    <button type="submit" value="Search">Submit</button>
+
+}
 
 <p>
     @Html.ActionLink("Create New", "Create")
