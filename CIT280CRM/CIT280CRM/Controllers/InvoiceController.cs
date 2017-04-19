@@ -27,7 +27,7 @@ namespace CIT280CRM.Controllers
         {
             var invoice = db.Invoice.Include(i => i.ClientModels);
 
-            if (filter != null)
+            if (string.IsNullOrEmpty(filter))
                 invoice = invoice.Where(i => i.PurchaseOrder == filter);
 
             switch (sortId)
