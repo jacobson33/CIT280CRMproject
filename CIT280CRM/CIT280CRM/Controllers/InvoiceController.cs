@@ -23,11 +23,14 @@ namespace CIT280CRM.Controllers
         }
 
         // GET: Invoice
-        public ActionResult Index(int? sortId, int? page)
+        public ActionResult Index(int? sortId, int? page, string filter)
         {
             var invoice = db.Invoice.Include(i => i.ClientModels);
 
-            switch(sortId)
+            if (filter != null)
+                invoice = invoice.Where(i => i.PurchaseOrder == filter);
+
+            switch (sortId)
             {
                 case 1:
                     invoice = invoice.OrderBy(i => i.ClientModels.CompanyName);
@@ -50,17 +53,6 @@ namespace CIT280CRM.Controllers
             }
 
             return View(invoice.ToPagedList((page ?? 1), 15));
-        }
-
-        // GET: Invoice based on SearchTerm (PO #)
-        [HttpGet]
-        public ActionResult IndexSearch(string searchTerm)
-        {
-            var invoice = (from i in db.Invoice
-                           where i.PurchaseOrder == searchTerm
-                           select i).ToList();
-
-            return View(invoice);
         }
 
         // GET: Invoice/Details/5

@@ -15,7 +15,7 @@ namespace CIT280CRM.Migrations
 
         protected override void Seed(CIT280CRM.Models.ApplicationDbContext context)
         {
-            context.Category.AddOrUpdate(c => c.CategoryID,
+            /*context.Category.AddOrUpdate(c => c.CategoryID,
                 new CategoryModels { Category = "Roofing" },
                 new CategoryModels { Category = "Siding" },
                 new CategoryModels { Category = "Decking" },
@@ -60,6 +60,7 @@ namespace CIT280CRM.Migrations
                 new LocationModels { Name = "Waterford", StreetAddress = "1131 Sylvertis", City = "Waterford", State = "MI", Zip = 48328 },
                 new LocationModels { Name = "Wayne", StreetAddress = "36340 Van Born Road", City = "Wayne", State = "MI", Zip = 48184 }
                 );
+            */
         }
     }
 }
