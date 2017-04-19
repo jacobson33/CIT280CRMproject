@@ -17,7 +17,7 @@ namespace CIT280CRM.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         [HttpPost]
-        public ActionResult BlankEditorRow()
+        public ActionResult EditorRow()
         {
             return PartialView("EditorRow", new SaleItemModels());
         }

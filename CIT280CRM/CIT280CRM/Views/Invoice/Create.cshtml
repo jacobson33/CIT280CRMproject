@@ -12,7 +12,7 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal col-md-7">
+    <div class="form-horizontal col-md-9">
         <h4>Invoice Information</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -55,19 +55,19 @@
                     @Html.Partial("EditorRow", lineItem);
                 }
             </table>
-            @Html.ActionLink("Add another...", "BlankEditorRow", null, new { id = "addItem" })
+            <a class="btn btn-default" id="addItem">Add Line Item</a>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-7">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save Invoice" class="btn btn-default pull-right" />
             </div>
         </div>
 
     </div>
 }
 
-<div class="col-md-5">
+<div class="col-md-3">
     <h4>Status &amp; Total</h4>
     <hr />
     <div class="form-group">
@@ -100,11 +100,12 @@
 <script>
     $('#addItem').click(function () {
         $.ajax({
-            url: this.href,
             type:'POST',
+            url: '@Url.Action("EditorRow", "Invoice")',
             cache: false,
             success: function (html) {
-                $('#editorRows').append(html);
+                console.log(html);
+                $('.editorRows').append(html);
             }
         });
         return false;

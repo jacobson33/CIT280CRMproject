@@ -1,6 +1,7 @@
 ﻿@model CIT280CRM.Models.SaleItemModels
+@using HtmlHelpers.BeginCollectionItem
 
-<div class="editorRow">
+<div>
     @using (Html.BeginCollectionItem("LineItems"))
     {
         <tr class="editorRow">
@@ -17,9 +18,8 @@
                 @Html.EditorFor(x => x.Price)
             </td>
             <td>
-                <a href="#" class="deleteRow">delete</a>
+                <a href="#" class="deleteRow btn">X</a>
             </td>
         </tr>
-        
     }
 </div>
