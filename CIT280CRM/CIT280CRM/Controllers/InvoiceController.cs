@@ -22,38 +22,60 @@ namespace CIT280CRM.Controllers
             return PartialView("EditorRow", new SaleItemModels());
         }
 
+        //public ViewResult Index(int? page, string searchTerm)
+        //{
+        //    var invoice = from i in db.Invoice
+        //                  select i;
+
+        //    if (!String.IsNullOrEmpty(searchTerm))
+        //    {
+        //        searchTerm = ;
+        //    }
+
+        //    switch (searchTerm)
+        //    {
+        //        case :
+        //            invoice = invoice.Where(i => i.PurchaseOrder == searchTerm);
+        //            return View(invoice.ToPagedList((page ?? 1), 15));
+        //        default:
+        //            invoice = db.Invoice.Include(i => i.ClientModels);
+        //            invoice = invoice.OrderBy(i => i.PurchaseOrder);
+        //            return View(invoice.ToPagedList((page ?? 1), 15));
+        //    }
+        //}
+
         // GET: Invoice
-        public ActionResult Index(int? sortId, int? page, string filter)
-        {
-            var invoice = db.Invoice.Include(i => i.ClientModels);
+        //public ActionResult Index(int? sortId, int? page, string filter)
+        //{
+        //    var invoice = db.Invoice.Include(i => i.ClientModels);
 
-            if (!string.IsNullOrEmpty(filter))
-                invoice = invoice.Where(i => i.PurchaseOrder == filter);
+        //    if (filter != null)
+        //        invoice = invoice.Where(i => i.PurchaseOrder == filter);
 
-            switch (sortId)
-            {
-                case 1:
-                    invoice = invoice.OrderBy(i => i.ClientModels.CompanyName);
-                    break;
-                case 2:
-                    invoice = invoice.OrderBy(i => i.TotalAmount);
-                    break;
-                case 3:
-                    invoice = invoice.OrderBy(i => i.PurchaseOrder);
-                    break;
-                case 4:
-                    invoice = invoice.OrderBy(i => i.InvoiceDate);
-                    break;
-                case 5:
-                    invoice = invoice.OrderBy(i => i.ShipDate);
-                    break;
-                default:
-                    invoice = invoice.OrderBy(i => i.InvoiceID);
-                    break;
-            }
+        //    switch (sortId)
+        //    {
+        //        case 1:
+        //            invoice = invoice.OrderBy(i => i.ClientModels.CompanyName);
+        //            break;
+        //        case 2:
+        //            invoice = invoice.OrderBy(i => i.TotalAmount);
+        //            break;
+        //        case 3:
+        //            invoice = invoice.OrderBy(i => i.PurchaseOrder);
+        //            break;
+        //        case 4:
+        //            invoice = invoice.OrderBy(i => i.InvoiceDate);
+        //            break;
+        //        case 5:
+        //            invoice = invoice.OrderBy(i => i.ShipDate);
+        //            break;
+        //        default:
+        //            invoice = invoice.OrderBy(i => i.InvoiceID);
+        //            break;
+        //    }
 
-            return View(invoice.ToPagedList((page ?? 1), 15));
-        }
+        //    return View(invoice.ToPagedList((page ?? 1), 15));
+        //}
 
         // GET: Invoice/Details/5
         public ActionResult Details(int? id)
