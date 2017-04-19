@@ -17,7 +17,7 @@ using System.Web.Security;
 
 namespace CIT280CRM.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -64,7 +64,7 @@ namespace CIT280CRM.Controllers
 
         // GET: Users/Create
         // GET: Users/Create
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+       [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
