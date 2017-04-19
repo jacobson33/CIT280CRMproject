@@ -11,20 +11,21 @@ using System.Web.Mvc;
 
 namespace CIT280CRM.Controllers
 {
+    [AuthorizeOrRedirectAttribute(Roles = "Admin")]
     public class IdentityRoleController : Controller
     {
         // GET: IdentityRole
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: IdentityRoles
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        
         public ActionResult Index()
         {
             return View(db.Roles.ToList());
         }
 
         // GET: IdentityRoles/Details/5
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+       
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -40,7 +41,7 @@ namespace CIT280CRM.Controllers
         }
 
         // GET: IdentityRoles/Create
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+
         public ActionResult Create()
         {
             return View();
@@ -49,7 +50,6 @@ namespace CIT280CRM.Controllers
         // POST: IdentityRoles/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "ID,Name")] IdentityRole role)
         {
             if (ModelState.IsValid)
@@ -63,7 +63,7 @@ namespace CIT280CRM.Controllers
         }
 
         // GET: IdentityRoles/Edit/5
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -81,7 +81,7 @@ namespace CIT280CRM.Controllers
         // POST: IdentityRoles/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        
         public ActionResult Edit([Bind(Include = "ID, Name")] IdentityRole role)
         {
             if (ModelState.IsValid)
@@ -94,7 +94,7 @@ namespace CIT280CRM.Controllers
         }
 
         // GET: IdentityRoles/Delete/5
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -112,7 +112,6 @@ namespace CIT280CRM.Controllers
         // POST: IdentityRoles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult DeleteConfirmed(string id)
         {
             IdentityRole identityRoleTemp = db.Roles.Find(id);
@@ -121,7 +120,6 @@ namespace CIT280CRM.Controllers
             return RedirectToAction("Index");
         }
 
-        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult ViewUserRoles(string userName = null)
         {
             if (!string.IsNullOrWhiteSpace(userName))
