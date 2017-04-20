@@ -38,7 +38,7 @@ namespace CIT280CRM.Controllers
             switch (searchID)
             {
                 case 1:
-                    invoice = from i in db.Invoice
+                    invoice = from i in db.Invoice.Include(i => i.ClientModels)
                               where i.PurchaseOrder == searchTerm
                               orderby i.ClientID
                               select i;
