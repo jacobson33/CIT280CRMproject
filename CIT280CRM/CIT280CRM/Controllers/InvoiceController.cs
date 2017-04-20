@@ -65,39 +65,6 @@ namespace CIT280CRM.Controllers
             }
         }
 
-        // GET: Invoice
-        //public ActionResult Index(int? sortId, int? page, string filter)
-        //{
-        //    var invoice = db.Invoice.Include(i => i.ClientModels);
-
-        //    if (filter != null)
-        //        invoice = invoice.Where(i => i.PurchaseOrder == filter);
-
-        //    switch (sortId)
-        //    {
-        //        case 1:
-        //            invoice = invoice.OrderBy(i => i.ClientModels.CompanyName);
-        //            break;
-        //        case 2:
-        //            invoice = invoice.OrderBy(i => i.TotalAmount);
-        //            break;
-        //        case 3:
-        //            invoice = invoice.OrderBy(i => i.PurchaseOrder);
-        //            break;
-        //        case 4:
-        //            invoice = invoice.OrderBy(i => i.InvoiceDate);
-        //            break;
-        //        case 5:
-        //            invoice = invoice.OrderBy(i => i.ShipDate);
-        //            break;
-        //        default:
-        //            invoice = invoice.OrderBy(i => i.InvoiceID);
-        //            break;
-        //    }
-
-        //    return View(invoice.ToPagedList((page ?? 1), 15));
-        //}
-
         // GET: Invoice/Details/5
         public ActionResult Details(int? id)
         {
