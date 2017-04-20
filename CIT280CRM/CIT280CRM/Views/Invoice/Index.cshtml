@@ -17,16 +17,6 @@
 
 }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <label for="search">Search by Company Name</label>
-    @Html.TextBox("searchName")
-    <button type="submit" value="Search">Submit</button>
-
-}
-
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
