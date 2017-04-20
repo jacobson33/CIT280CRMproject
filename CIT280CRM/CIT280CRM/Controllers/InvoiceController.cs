@@ -40,12 +40,10 @@ namespace CIT280CRM.Controllers
             switch (searchID)
             {
                 case 1:
-                    //invoice = invoice.Where(i => i.PurchaseOrder == searchTerm);
                     invoice = from i in db.Invoice
                               where i.PurchaseOrder == searchTerm
                               orderby i.ClientID
                               select i;
-                    //invoice = invoice.OrderBy(i => i.PurchaseOrder);
                     return View(invoice.ToPagedList((page ?? 1), 15));
                 default:
                     invoice = db.Invoice.Include(i => i.ClientModels);
