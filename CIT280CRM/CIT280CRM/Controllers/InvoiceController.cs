@@ -22,27 +22,37 @@ namespace CIT280CRM.Controllers
             return PartialView("EditorRow", new SaleItemModels());
         }
 
-        //public ViewResult Index(int? page, string searchTerm)
-        //{
-        //    var invoice = from i in db.Invoice
-        //                  select i;
+        public ViewResult Index(int? page, string searchTerm)
+        { 
 
-        //    if (!String.IsNullOrEmpty(searchTerm))
-        //    {
-        //        searchTerm = ;
-        //    }
+            int searchID = 0;
+            var invoice = from i in db.Invoice
+                          select i;
 
-        //    switch (searchTerm)
-        //    {
-        //        case :
-        //            invoice = invoice.Where(i => i.PurchaseOrder == searchTerm);
-        //            return View(invoice.ToPagedList((page ?? 1), 15));
-        //        default:
-        //            invoice = db.Invoice.Include(i => i.ClientModels);
-        //            invoice = invoice.OrderBy(i => i.PurchaseOrder);
-        //            return View(invoice.ToPagedList((page ?? 1), 15));
-        //    }
-        //}
+            if (!String.IsNullOrEmpty(searchTerm))
+            {
+                Convert.ToInt32(searchTerm);
+                searchID = 1;
+            }
+
+            new List<InvoiceModels>();
+
+            switch (searchID)
+            {
+                case 1:
+                    //invoice = invoice.Where(i => i.PurchaseOrder == searchTerm);
+                    invoice = from i in db.Invoice
+                              where i.PurchaseOrder == searchTerm
+                              orderby i.ClientID
+                              select i;
+                    //invoice = invoice.OrderBy(i => i.PurchaseOrder);
+                    return View(invoice.ToPagedList((page ?? 1), 15));
+                default:
+                    invoice = db.Invoice.Include(i => i.ClientModels);
+                    invoice = invoice.OrderBy(i => i.PurchaseOrder);
+                    return View(invoice.ToPagedList((page ?? 1), 15));
+            }
+        }
 
         // GET: Invoice
         //public ActionResult Index(int? sortId, int? page, string filter)
