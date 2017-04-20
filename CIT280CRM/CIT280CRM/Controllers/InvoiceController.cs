@@ -35,8 +35,6 @@ namespace CIT280CRM.Controllers
                 searchID = 1;
             }
 
-            new List<InvoiceModels>();
-
             switch (searchID)
             {
                 case 1:
@@ -47,7 +45,7 @@ namespace CIT280CRM.Controllers
                     return View(invoice.ToPagedList((page ?? 1), 15));
                 default:
                     invoice = db.Invoice.Include(i => i.ClientModels);
-                    invoice = invoice.OrderBy(i => i.PurchaseOrder);
+                    invoice = invoice.OrderBy(i => i.ClientID);
                     return View(invoice.ToPagedList((page ?? 1), 15));
             }
         }
