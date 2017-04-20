@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using CIT280CRM.Models;
+using System.Text.RegularExpressions;
 
 namespace CIT280CRM.Controllers
 {
@@ -23,16 +24,24 @@ namespace CIT280CRM.Controllers
         }
 
         public ViewResult Index(int? page, string searchTerm)
-        { 
-
+        {
+            string searchPattern = @"^[0-9]+$";
             int searchID = 0;
             var invoice = from i in db.Invoice
                           select i;
 
             if (!String.IsNullOrEmpty(searchTerm))
             {
-                Convert.ToInt32(searchTerm);
-                searchID = 1;
+                if (Regex.IsMatch(searchTerm, searchPattern))
+                {
+                    Convert.ToInt32(searchTerm);
+                    searchID = 1;
+                }
+
+                else
+                {
+                    searchID = 2;
+                }
             }
 
             switch (searchID)
@@ -40,6 +49,12 @@ namespace CIT280CRM.Controllers
                 case 1:
                     invoice = from i in db.Invoice.Include(i => i.ClientModels)
                               where i.PurchaseOrder == searchTerm
+                              orderby i.ClientID
+                              select i;
+                    return View(invoice.ToPagedList((page ?? 1), 15));
+                case 2:
+                    invoice = from i in db.Invoice.Include(i => i.ClientModels)
+                              where i.ClientModels.CompanyName == searchTerm
                               orderby i.ClientID
                               select i;
                     return View(invoice.ToPagedList((page ?? 1), 15));
