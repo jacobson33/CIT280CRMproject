@@ -23,6 +23,7 @@ namespace CIT280CRM.Controllers
             return PartialView("EditorRow", new SaleItemModels());
         }
 
+        // Invoice Search Function
         public ViewResult Index(int? page, string searchTerm)
         {
             string searchPattern = @"^[0-9]+$";
