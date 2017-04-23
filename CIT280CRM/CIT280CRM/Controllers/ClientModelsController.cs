@@ -50,6 +50,13 @@ namespace CIT280CRM.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.PrimaryPhoneType = clientModels.Phone1Type.ToString();
+            ViewBag.SecondaryPhoneType = clientModels.Phone2Type.ToString();
+
+            if (clientModels.Phone1Type == 0) ViewBag.PrimaryPhoneType = "";
+            if (clientModels.Phone2Type == 0) ViewBag.SecondaryPhoneType = "";
+
             return View(clientModels);
         }
 
@@ -119,6 +126,13 @@ namespace CIT280CRM.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.PrimaryPhoneType = clientModels.Phone1Type.ToString();
+            ViewBag.SecondaryPhoneType = clientModels.Phone2Type.ToString();
+
+            if (clientModels.Phone1Type == 0) ViewBag.PrimaryPhoneType = "";
+            if (clientModels.Phone2Type == 0) ViewBag.SecondaryPhoneType = "";
+
             return View(clientModels);
         }
 
