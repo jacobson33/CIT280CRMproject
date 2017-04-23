@@ -32,22 +32,6 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.InvoiceDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-7">
-                @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ShipDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-7">
-                @Html.EditorFor(model => model.ShipDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ShipDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
         <div class="">
             <table class="table table-striped editorRows">
                 @foreach (var lineItem in Model.LineItems)
@@ -73,7 +57,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.InvoiceStatus, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-5">
-            @Html.DropDownListFor(model => model.InvoiceStatus, new SelectList(new List<string>{"Created","Processing","Shipped","Delivered"}))
+            @Html.EnumDropDownListFor(model => model.InvoiceStatus, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.InvoiceStatus, "", new { @class = "text-danger" })
         </div>
     </div>

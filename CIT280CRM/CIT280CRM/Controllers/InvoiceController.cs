@@ -78,6 +78,10 @@ namespace CIT280CRM.Controllers
             {
                 return HttpNotFound();
             }
+
+            ClientModels client = db.Client.Find(invoiceModels.ClientID);
+            ViewBag.CompanyName = client.CompanyName;
+
             return View(invoiceModels);
         }
 
@@ -95,17 +99,21 @@ namespace CIT280CRM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "InvoiceID,ClientID,TotalAmount,PurchaseOrder,InvoiceDate,ShipDate,InvoiceStatus")] InvoiceModels invoiceModels)
-        {
+        public ActionResult Create([Bind(Include = "InvoiceID,ClientID,TotalAmount,PurchaseOrder,InvoiceStatus")] InvoiceModels invoice)
+        { 
             if (ModelState.IsValid)
             {
-                db.Invoice.Add(invoiceModels);
+                invoice.InvoiceDate = DateTime.Now.ToString("MM/dd/yyyy");
+                if ((int)invoice.InvoiceStatus == 2) //shipped
+                    invoice.ShipDate = DateTime.Now.ToString("MM/dd/yyyy");
+
+                db.Invoice.Add(invoice);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClientID = new SelectList(db.Client, "ClientID", "CompanyName", invoiceModels.ClientID);
-            return View(invoiceModels);
+            ViewBag.ClientID = new SelectList(db.Client, "ClientID", "CompanyName", invoice.ClientID);
+            return View(invoice);
         }
 
         // GET: Invoice/Edit/5
@@ -129,16 +137,19 @@ namespace CIT280CRM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "InvoiceID,ClientID,TotalAmount,PurchaseOrder,InvoiceDate,ShipDate,InvoiceStatus")] InvoiceModels invoiceModels)
+        public ActionResult Edit([Bind(Include = "InvoiceID,ClientID,TotalAmount,PurchaseOrder,InvoiceStatus,InvoiceDate,ShipDate")] InvoiceModels invoice)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(invoiceModels).State = EntityState.Modified;
+                if (db.Invoice.Any(i => i.InvoiceID == invoice.InvoiceID && (int)i.InvoiceStatus != 2 && (int)invoice.InvoiceStatus == 2)) {
+                    invoice.ShipDate = DateTime.Now.ToString("MM/dd/yyyy");
+                }
+                db.Entry(invoice).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ClientID = new SelectList(db.Client, "ClientID", "CompanyName", invoiceModels.ClientID);
-            return View(invoiceModels);
+            ViewBag.ClientID = new SelectList(db.Client, "ClientID", "CompanyName", invoice.ClientID);
+            return View(invoice);
         }
 
         // GET: Invoice/Delete/5
@@ -153,6 +164,10 @@ namespace CIT280CRM.Controllers
             {
                 return HttpNotFound();
             }
+
+            ClientModels client = db.Client.Find(invoiceModels.ClientID);
+            ViewBag.CompanyName = client.CompanyName;
+
             return View(invoiceModels);
         }
 
@@ -163,6 +178,10 @@ namespace CIT280CRM.Controllers
         {
             InvoiceModels invoiceModels = db.Invoice.Find(id);
             db.Invoice.Remove(invoiceModels);
+
+            List<SaleItemModels> saleItems = db.SaleItem.Where(s => s.InvoiceID == invoiceModels.InvoiceID).ToList();
+            saleItems.ForEach(si => saleItems.Remove(si));
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }

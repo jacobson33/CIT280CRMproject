@@ -7,17 +7,9 @@
 <h2>Invoice Details</h2>
 
 <div>
-    <h4>InvoiceModels</h4>
+    <h4>Invoice for: @ViewBag.CompanyName</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ClientModels.CompanyName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ClientModels.CompanyName)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.TotalAmount)
         </dt>

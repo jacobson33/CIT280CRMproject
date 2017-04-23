@@ -66,26 +66,34 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
 
 @helper formatStatus(string s)
 {
-string labelFormat = "label-default";
+    string labelFormat = "label-default";
 
-switch (s)
-{
-    case "Shipped":
-        labelFormat = "label-primary";
-        break;
+    switch (s)
+    {
+        case "Created":
+            labelFormat = "label-info";
+            break;
 
-    case "Processing":
-        labelFormat = "label-warning";
-        break;
+        case "Processing":
+            labelFormat = "label-warning";
+            break;
 
-    case "Created":
-        labelFormat = "label-info";
-        break;
+        case "Shipped":
+            labelFormat = "label-primary";
+            break;
 
-    case "Delivered":
-        labelFormat = "label-success";
-        break;
-}
+        case "Complete":
+            labelFormat = "label-success";
+            break;
+
+        case "Holding":
+            labelFormat = "label-default";
+            break;
+
+        case "Cancelled":
+            labelFormat = "label-danger";
+            break;
+    }
 
     <span class="label @labelFormat">@s</span>
 }

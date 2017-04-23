@@ -7,6 +7,11 @@ using System.Web;
 
 namespace CIT280CRM.Models
 {
+    public enum Status
+    {
+        Created = 0, Processing, Shipped, Complete, Holding, Cancelled 
+    }
+
     [Table("Invoice")]
     public class InvoiceModels
     {
@@ -32,7 +37,7 @@ namespace CIT280CRM.Models
         public string ShipDate { get; set; }
 
         [Display(Name = "Status")]
-        public string InvoiceStatus { get; set; }
+        public Status InvoiceStatus { get; set; }
 
         public List<SaleItemModels> LineItems { get; set; }
 
