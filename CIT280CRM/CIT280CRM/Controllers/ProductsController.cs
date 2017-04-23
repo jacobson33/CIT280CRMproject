@@ -36,7 +36,7 @@ namespace CIT280CRM.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.Category = db.Category.Find(productModels.CategoryID);
+            ViewBag.Category = db.Category.Find(productModels.CategoryID).Category;
 
             return View(productModels);
         }
