@@ -57,7 +57,7 @@ namespace CIT280CRM.Controllers
         }
 
         // Invoice Search Function
-        public ViewResult Index(int? page, string searchTerm)
+        public ViewResult Index(int? page, int? sortId, string searchTerm)
         {
             string searchPattern = @"^[0-9]+$";
             int searchID = 0;
@@ -83,20 +83,43 @@ namespace CIT280CRM.Controllers
                 case 1:
                     invoice = from i in db.Invoice.Include(i => i.ClientModels)
                               where i.PurchaseOrder == searchTerm
-                              orderby i.ClientID
                               select i;
-                    return View(invoice.ToPagedList((page ?? 1), 15));
+                    break;
                 case 2:
                     invoice = from i in db.Invoice.Include(i => i.ClientModels)
                               where i.ClientModels.CompanyName == searchTerm
-                              orderby i.ClientID
                               select i;
-                    return View(invoice.ToPagedList((page ?? 1), 15));
+                    break;
                 default:
                     invoice = db.Invoice.Include(i => i.ClientModels);
-                    invoice = invoice.OrderBy(i => i.ClientID);
-                    return View(invoice.ToPagedList((page ?? 1), 15));
+                    break;
             }
+
+            switch (sortId)
+            {
+                case 1:
+                    invoice = invoice.OrderBy(i => i.ClientModels.CompanyName);
+                    break;
+                case 2:
+                    invoice = invoice.OrderBy(i => i.TotalAmount);
+                    break;
+                case 3:
+                    invoice = invoice.OrderBy(i => i.PurchaseOrder);
+                    break;
+                case 4:
+                    invoice = invoice.OrderBy(i => i.InvoiceDate);
+                    break;
+                case 5:
+                    invoice = invoice.OrderBy(i => i.ShipDate);
+                    break;
+                default:
+                    invoice = invoice.OrderBy(i => i.ClientID);
+                    break;
+            }
+
+            ViewBag.filterString = searchTerm;
+
+            return View(invoice.ToPagedList((page ?? 1), 15));
         }
 
         // GET: Invoice/Details/5
