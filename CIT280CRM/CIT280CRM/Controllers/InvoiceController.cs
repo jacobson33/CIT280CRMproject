@@ -113,9 +113,8 @@ namespace CIT280CRM.Controllers
             }
 
             ClientModels client = db.Client.Find(invoiceModels.ClientID);
-            
-            //invoiceModels.
-            
+
+            ViewBag.LineItems = db.SaleItem.Where(li => li.InvoiceID == invoiceModels.InvoiceID).ToList();
             ViewBag.CompanyName = client.CompanyName;
 
             return View(invoiceModels);

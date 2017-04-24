@@ -51,6 +51,22 @@
         </dd>
 
     </dl>
+
+    <table class="table">
+        <tr>
+            <th>Product ID</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        @foreach (var item in ViewBag.LineItems)
+        {
+            <tr>
+                <td>@item.ProductID</td>
+                <td>@item.Quantity</td>
+                <td>@item.Price</td>
+            </tr>
+        }
+    </table>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.InvoiceID }) |
