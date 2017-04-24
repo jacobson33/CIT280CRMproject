@@ -6,13 +6,14 @@
 
 <h2>Edit Invoice</h2>
 
-
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "invoiceForm" }))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
+
+    <div class="form-horizontal col-md-9">
+        <h4>Invoice: @Model.InvoiceDate</h4>
         <hr />
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.InvoiceID)
         @Html.HiddenFor(model => model.InvoiceDate)
@@ -27,36 +28,66 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TotalAmount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.PurchaseOrder, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-7">
                 @Html.EditorFor(model => model.PurchaseOrder, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PurchaseOrder, "", new { @class = "text-danger" })
             </div>
         </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.InvoiceStatus, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EnumDropDownListFor(model => model.InvoiceStatus, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.InvoiceStatus, "", new { @class = "text-danger" })
+        <div class="">
+            <table class="table editorRows">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var lineItem in Model.LineItems)
+                    {
+                        <tr class="editorRow">
+                            @Html.Partial("EditorRow", lineItem)
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <a class="btn btn-info" id="addItem">Add Line Item</a>
         </div>
     </div>
 
+    <div class="col-md-3">
+        <h4>Status &amp; Total</h4>
+        <hr />
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            @Html.LabelFor(model => model.InvoiceStatus, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EnumDropDownListFor(model => model.InvoiceStatus, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.InvoiceStatus, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br /><br />
+        <div class="form-group">
+            @Html.LabelFor(model => model.TotalAmount, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
+
+    <br /><br />
+    <div class="form-group">
+        <div class="col-md-2 col-md-offset-10">
+            <input type="submit" value="Save Invoice" class="btn btn-success" />
+        </div>
+    </div>
+
 }
+
+<div class="clearfix"></div>
 
 <div>
     @Html.ActionLink("Back to List", "Index")
@@ -65,3 +96,103 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script>
+    var _InvoiceID = '@ViewBag.InvoiceID';
+    _InvoiceID = (_InvoiceID == null || _InvoiceID == undefined || _InvoiceID == '') ? -1 : _InvoiceID;
+
+    function LineItem(invoiceid, product, quantity, price) {
+        this.InvoiceID = invoiceid;
+        this.ProductID = product;
+        this.Quantity = quantity;
+        this.Price = price;
+    }
+
+    function LineItems() {
+        this.LineItems = [];
+    }
+
+    $('#invoiceForm').submit(function () {
+        //save line items before form is submitted
+        if (_InvoiceID > -1 && $('.editorRow').length > 0) {
+            var lineItems = new LineItems();
+
+            $('.editorRow').each(function () {
+                var invoiceid = _InvoiceID;
+                var itemid = $(this).children('td:eq(0)').children('select').val();
+                var quantity = $(this).children('td:eq(1)').children('input').val();
+                var price = $(this).children('td:eq(2)').children('input').val();
+
+                lineItems.LineItems.push(new LineItem(invoiceid, itemid, quantity, price));
+            });
+
+            $.ajax({
+                type: 'POST',
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: '@Url.Action("SaveLineItems", "Invoice")',
+                data: JSON.stringify(lineItems),
+                success: function (response) {
+                    //alert(response);
+                },
+                error: function (response) {
+                    alert("Error: " + response.responseText);
+                }
+            });
+
+            return true;
+        } else {
+            alert("Cannot save Line Items: Invalid Invoice ID");
+            return false;
+        }
+    });
+
+    $('#addItem').click(function () {
+        //add new line item rows and bind events
+        $.ajax({
+            type:'POST',
+            url: '@Url.Action("EditorRow", "Invoice")',
+            cache: false,
+            success: function (html) {
+                $('.editorRows tbody').append('<tr class="editorRow">' + html + '</tr>');
+                $('.deleteRow').off().click(function () {
+                    $(this).parents('tr.editorRow:first').remove();
+                    calculateTotal();
+                });
+                $('.productQuantity').off().change(function(){
+                    calculateTotal();
+                });
+            }, error: function () {
+                alert('Error adding new row');
+            }
+        });
+        return false;
+    });
+
+    function calculateTotal() {
+        //calculates each row total and sums the invoice total
+        var total = 0.0;
+        $('.editorRow').each(function () {
+            var quantity = $(this).children('td:eq(1)').children('input').val();
+            var priceEach = $(this).children('td:eq(0)').children('select').children('option:selected').data('price') * 1;
+
+            var subTotal = quantity * priceEach;
+
+            $(this).children('td:eq(2)').children('input').val(subTotal.toFixed(2));
+
+            total += (quantity * priceEach);
+        });
+        $('#TotalAmount').val(total.toFixed(2));
+    }
+
+    //events
+    $('.deleteRow').off().click(function () {
+        $(this).parents('tr.editorRow:first').remove();
+        calculateTotal();
+    });
+    $('.productQuantity').off().change(function () {
+        calculateTotal();
+    });
+
+</script>

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using PagedList;
 using CIT280CRM.Models;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace CIT280CRM.Controllers
 {
@@ -18,9 +19,41 @@ namespace CIT280CRM.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         [HttpPost]
-        public ActionResult EditorRow()
+        public async Task<JsonResult> SaveLineItems(List<LineItemViewModel> LineItems)
         {
-            return PartialView("EditorRow", new SaleItemModels());
+            if (ModelState.IsValid)
+            {
+                int invoiceId = LineItems.First().InvoiceID;
+                db.SaleItem.RemoveRange(db.SaleItem.Where(s => s.InvoiceID == invoiceId));
+
+                foreach (LineItemViewModel item in LineItems)
+                {
+                    SaleItemModels si = new SaleItemModels();
+                    si.InvoiceID = item.InvoiceID;
+                    si.ProductID = item.ProductID;
+                    si.Quantity = item.Quantity;
+                    si.Price = item.Price;
+
+                    db.SaleItem.Add(si);
+                }
+                db.SaveChanges();
+                return Json("Line Items saved");
+            }
+            else
+            {
+                return Json("Line Items not saved");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditorRow(SaleItemModels model = null)
+        {
+            ViewBag.Products = db.Products.ToList().OrderBy(p => p.Name);
+
+            if (model == null)
+                return PartialView("EditorRow", new SaleItemModels());
+            else
+                return PartialView("EditorRow", model);
         }
 
         // Invoice Search Function
@@ -80,6 +113,9 @@ namespace CIT280CRM.Controllers
             }
 
             ClientModels client = db.Client.Find(invoiceModels.ClientID);
+            
+            //invoiceModels.
+            
             ViewBag.CompanyName = client.CompanyName;
 
             return View(invoiceModels);
@@ -89,7 +125,7 @@ namespace CIT280CRM.Controllers
         public ActionResult Create()
         {
             ViewBag.ClientID = new SelectList(db.Client, "ClientID", "CompanyName");
-
+            
             var model = new InvoiceModels();
             return View(model);
         }
@@ -99,20 +135,19 @@ namespace CIT280CRM.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "InvoiceID,ClientID,TotalAmount,PurchaseOrder,InvoiceStatus")] InvoiceModels invoice)
+        public ActionResult Create([Bind(Include = "InvoiceID,ClientID,PurchaseOrder")] InvoiceModels invoice)
         { 
             if (ModelState.IsValid)
             {
-                invoice.InvoiceDate = DateTime.Now.ToString("MM/dd/yyyy");
-                if ((int)invoice.InvoiceStatus == 2) //shipped
-                    invoice.ShipDate = DateTime.Now.ToString("MM/dd/yyyy");
+                invoice.InvoiceDate = DateTime.Now.ToString("MM/dd/yyyy");                
 
                 db.Invoice.Add(invoice);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", "Invoice", new { id = invoice.InvoiceID });
             }
 
             ViewBag.ClientID = new SelectList(db.Client, "ClientID", "CompanyName", invoice.ClientID);
+
             return View(invoice);
         }
 
@@ -129,6 +164,11 @@ namespace CIT280CRM.Controllers
                 return HttpNotFound();
             }
             ViewBag.ClientID = new SelectList(db.Client, "ClientID", "CompanyName", invoiceModels.ClientID);
+            ViewBag.InvoiceID = invoiceModels.InvoiceID;
+            ViewBag.Products = db.Products.ToList().OrderBy(p => p.Name);
+
+            invoiceModels.LineItems = db.SaleItem.Where(i => i.InvoiceID == invoiceModels.InvoiceID).ToList();
+
             return View(invoiceModels);
         }
 
@@ -179,8 +219,9 @@ namespace CIT280CRM.Controllers
             InvoiceModels invoiceModels = db.Invoice.Find(id);
             db.Invoice.Remove(invoiceModels);
 
-            List<SaleItemModels> saleItems = db.SaleItem.Where(s => s.InvoiceID == invoiceModels.InvoiceID).ToList();
-            saleItems.ForEach(si => saleItems.Remove(si));
+            //TODO: Remove SaleItems from db when Invoice is removed
+            //List<SaleItemModels> saleItems = db.SaleItem.Where(s => s.InvoiceID == invoiceModels.InvoiceID).ToList();
+            //saleItems.ForEach(si => saleItems.Remove(si));
 
             db.SaveChanges();
             return RedirectToAction("Index");

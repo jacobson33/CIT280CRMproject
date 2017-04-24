@@ -12,7 +12,7 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal col-md-9">
+    <div class="form-horizontal col-md-12">
         <h4>Invoice Information</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -31,72 +31,20 @@
                 @Html.ValidationMessageFor(model => model.PurchaseOrder, "", new { @class = "text-danger" })
             </div>
         </div>
+    </div>
 
-        <div class="">
-            <table class="table table-striped editorRows">
-                @foreach (var lineItem in Model.LineItems)
-                {
-                    @Html.Partial("EditorRow", lineItem);
-                }
-            </table>
-            <a class="btn btn-default" id="addItem">Add Line Item</a>
+    <br /><br />
+    <div class="form-group">
+        <div class="col-md-2 col-md-offset-10">
+            <input type="submit" value="Begin Invoice" class="btn btn-success" />
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-7">
-                <input type="submit" value="Save Invoice" class="btn btn-default pull-right" />
-            </div>
-        </div>
-
     </div>
 }
 
-<div class="col-md-3">
-    <h4>Status &amp; Total</h4>
-    <hr />
-    <div class="form-group">
-        @Html.LabelFor(model => model.InvoiceStatus, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-5">
-            @Html.EnumDropDownListFor(model => model.InvoiceStatus, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.InvoiceStatus, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <br /><br />
-    <div class="form-group">
-        @Html.LabelFor(model => model.TotalAmount, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-5">
-            @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
-        </div>
-    </div>
-</div>
-
-<div class="clearfix"></div>
-
-<div>
+<div class="clearfix">
     @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
-<script>
-    $('#addItem').click(function () {
-        $.ajax({
-            type:'POST',
-            url: '@Url.Action("EditorRow", "Invoice")',
-            cache: false,
-            success: function (html) {
-                console.log(html);
-                $('.editorRows').append(html);
-            }
-        });
-        return false;
-    });
-
-    $('a.deleteRow').live('click', function () {
-        $(this).parents('tr.editorRow:first').remove();
-        return false;
-    });
-</script>

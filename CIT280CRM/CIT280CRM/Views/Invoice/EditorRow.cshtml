@@ -1,25 +1,32 @@
 ﻿@model CIT280CRM.Models.SaleItemModels
 @using HtmlHelpers.BeginCollectionItem
 
-<div>
+
     @using (Html.BeginCollectionItem("LineItems"))
     {
-        <tr class="editorRow">
-            <td>
-                @Html.LabelFor(x => x.ProductID)
-                @Html.EditorFor(x => x.ProductID)
-            </td>
-            <td>
-                @Html.LabelFor(x => x.Quantity)
-                @Html.EditorFor(x => x.Quantity)
-            </td>
-            <td>
-                @Html.LabelFor(x => x.Price)
-                @Html.EditorFor(x => x.Price)
-            </td>
-            <td>
-                <a href="#" class="deleteRow btn">X</a>
-            </td>
-        </tr>
+        <td style="display:table-cell">
+            <select>
+                @foreach (CIT280CRM.Models.ProductModels product in ViewBag.Products)
+                {
+                    if (product.ProductID == Model.ProductID)
+                    {
+                        <option id="Product_@product.ProductID" value="@product.ProductID" data-price="@product.Price" class="product-selected" selected>@product.Name</option>
+                    }
+                    else
+                    {
+                        <option id="Product_@product.ProductID" value="@product.ProductID" data-price="@product.Price" class="product-selected">@product.Name</option>
+                    }
+
+                }
+            </select>
+        </td>
+        <td style="display:table-cell">
+            @Html.EditorFor(x => x.Quantity, new { htmlAttributes = new { @class = "productQuantity", @min="0"} })
+        </td>
+        <td style="display:table-cell">
+            @Html.EditorFor(x => x.Price, new { htmlAttributes = new { @class = "", @readonly="readonly" } })
+        </td>
+        <td style="display:table-cell">
+            <a href="#" class="deleteRow btn-sm btn-danger">X</a>
+        </td>
     }
-</div>
